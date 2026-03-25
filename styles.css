@@ -1,0 +1,96 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Playpen Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: #111 url("background.jpg") no-repeat center center fixed; /* adjust path if needed */
+  background-size: cover;
+  color: #f5f5f5;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 1.5rem;
+  text-align: center;
+}
+
+.banner {
+  max-width: 100%;
+  height: auto;
+  margin: 1rem auto 1.5rem;
+  display: block;
+}
+
+.prompt {
+  font-size: 1.2rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Fake "button" paste area that can receive paste events */
+.paste-area {
+  display: block;
+  width: 100%;
+  max-width: 400px;
+  margin: 1rem auto;
+  padding: 1rem;
+  font-size: 1rem;
+  border: 2px dashed #666;
+  border-radius: 10px;
+  background: #1a1a1a;
+  color: #f5f5f5;
+  text-align: center;
+  cursor: pointer;
+  outline: none;
+  min-height: 4rem;
+}
+
+.paste-area:focus {
+  border-color: #f5f5f5;
+  box-shadow: 0 0 0 2px rgba(255,255,255,0.3);
+}
+
+.paste-area p.paste-instructions {
+  margin: 0.2rem 0;
+  opacity: 0.9;
+}
+
+/* Preview image */
+#previewImage {
+  max-width: 100%;
+  max-height: 300px;
+  margin: 1rem auto;
+  border-radius: 8px;
+  display: none;
+}
+
+/* Redo / Next buttons */
+.controls {
+  margin-top: 1rem;
+}
+
+.controls button {
+  margin: 0.5rem;
+  padding: 0.6rem 1.4rem;
+  font-size: 1rem;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+}
+
+#redoButton {
+  background: #444;
+  color: #f5f5f5;
+}
+
+#nextButton {
+  background: #f5f5f5;
+  color: #111;
+}
+
+#redoButton:hover {
+  background: #555;
+}
+
+#nextButton:hover {
+  background: #e2e2e2;
+}

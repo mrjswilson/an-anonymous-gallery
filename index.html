@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>An Anonymous Gallery</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playpen+Sans:wght@400;600&display=swap">
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <div class="container">
+    <header>
+      <img src="banner.png" alt="An Anonymous Gallery" width="777" class="banner">
+    </header>
+
+    <p class="prompt">
+      Submit an original image of what it means to be human.
+    </p>
+
+    <!-- Paste area that can receive paste events -->
+    <div id="pasteArea" class="paste-area" tabindex="0" contenteditable="true">
+      <p class="paste-instructions">
+        Paste an image from your clipboard.
+      </p>
+    </div>
+
+    <!-- Preview image -->
+    <img id="previewImage" alt="Pasted preview" style="display:none;">
+
+    <!-- Buttons appear after image -->
+    <div class="controls">
+      <button id="redoButton" type="button" style="display:none;">
+        Redo
+      </button>
+      <button id="nextButton" type="button" style="display:none;">
+        Continue
+      </button>
+    </div>
+
+    <!-- Hidden form data -->
+    <form id="imageForm" action="comment.html" method="get">
+      <input type="hidden" id="imageData" name="imageData">
+    </form>
+  </div>
+
+  <script src="paste.js"></script>
+</body>
+</html>
