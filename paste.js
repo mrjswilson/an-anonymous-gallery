@@ -4,6 +4,16 @@ function initPastePage() {
   const preview = document.getElementById('preview');
   const redoBtn = document.getElementById('redo-btn');
   const nextBtn = document.getElementById('next-btn');
+  document.addEventListener('DOMContentLoaded', () => {
+  const step1 = document.getElementById('step-1');
+  const step2 = document.getElementById('step-2');
+  const step3 = document.getElementById('step-3');
+
+  if (step1) initPastePage();
+  if (step2) initCommentPage();
+  if (step3) initGalleryPage();
+});
+
 
   let currentImageDataUrl = null;
 
