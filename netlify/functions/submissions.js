@@ -3,10 +3,10 @@
 const fetch = (...args) =>
   import('node-fetch').then(({ default: fetch }) => fetch(...args));
 
-const OWNER = 'YOUR_GITHUB_USERNAME';
-const REPO = 'YOUR_REPO_NAME';
+const OWNER = 'mrjswilson';
+const REPO = 'an-anonymous-gallery';
 const FILE_PATH = 'data/gallery.json'; // path inside your repo
-const BRANCH = 'main'; // or 'master'
+const BRANCH = 'master'; // or 'master'
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN; // set in Netlify dashboard
 
 const API_BASE = 'https://api.github.com';
