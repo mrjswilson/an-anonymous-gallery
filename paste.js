@@ -7,6 +7,15 @@ function initPastePage() {
 
   let currentImageDataUrl = null;
 
+  // Safety: if we didn't find the elements, stop
+  if (!fileInput || !preview || !redoBtn || !nextBtn) {
+    console.error('InitPastePage: elements not found');
+    return;
+  }
+
+  // Hide preview at start
+  preview.style.display = 'none';
+
   // When user selects a file
   fileInput.addEventListener('change', () => {
     const file = fileInput.files && fileInput.files[0];
@@ -14,7 +23,7 @@ function initPastePage() {
       return;
     }
 
-    if (!file.type.startsWith('image/')) {
+    if (!file.type || !file.type.startsWith('image/')) {
       alert('Please choose an image file.');
       fileInput.value = '';
       return;
