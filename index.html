@@ -14,19 +14,23 @@
 
     <main>
       <section id="step-1">
-        <h2>Post an original image of what it means to be human.</h2>
-        <p>Tap inside the box and press Ctrl+V / ⌘V (or long‑press → Paste on mobile).</p>
+  <h2>Post an original image of what it means to be human.</h2>
+  <p>Choose a photo or image from your device.</p>
 
-        <div id="paste-area" tabindex="0" class="paste-area">
-          <p class="paste-hint">Paste your image here</p>
-          <img id="preview" class="preview" />
-        </div>
+  <label class="file-label">
+    <input type="file" id="file-input" accept="image/*" hidden>
+    <span>Select or take a photo</span>
+  </label>
 
-        <div class="button-row">
-          <button id="redo-btn" disabled>Redo</button>
-          <button id="next-btn" disabled>Next</button>
-        </div>
-      </section>
+  <div class="preview-wrapper">
+    <img id="preview" class="preview" alt="Image preview">
+  </div>
+
+  <div class="button-row">
+    <button id="redo-btn" disabled>Redo</button>
+    <button id="next-btn" disabled>Next</button>
+  </div>
+</section>
     </main>
   </div>
 
