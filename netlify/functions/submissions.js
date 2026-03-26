@@ -89,10 +89,11 @@ exports.handler = async (event) => {
       };
     }
 
-    if (event.httpMethod === 'POST') {
+        if (event.httpMethod === 'POST') {
       const body = JSON.parse(event.body || '{}');
-           const { imageUrl, comment } = body;
+      const { imageUrl, comment } = body;
 
+      // Only require imageUrl now
       if (!imageUrl) {
         return {
           statusCode: 400,
@@ -102,13 +103,12 @@ exports.handler = async (event) => {
         };
       }
 
-
       const { content, sha } = await getFile();
       const updated = [
         ...content,
         {
           imageUrl,
-          comment,
+          comment: comment || null,
           createdAt: new Date().toISOString(),
         },
       ];
