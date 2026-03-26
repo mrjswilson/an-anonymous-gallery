@@ -91,16 +91,17 @@ exports.handler = async (event) => {
 
     if (event.httpMethod === 'POST') {
       const body = JSON.parse(event.body || '{}');
-      const { imageUrl, comment } = body;
+           const { imageUrl, comment } = body;
 
-      if (!imageUrl || !comment) {
+      if (!imageUrl) {
         return {
           statusCode: 400,
           body: JSON.stringify({
-            error: 'imageUrl and comment are required',
+            error: 'imageUrl is required',
           }),
         };
       }
+
 
       const { content, sha } = await getFile();
       const updated = [
