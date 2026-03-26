@@ -6,7 +6,7 @@ const fetch = (...args) =>
 const OWNER = 'mrjswilson';
 const REPO = 'an-anonymous-gallery';
 const FILE_PATH = 'data/gallery.json'; // path inside your repo
-const BRANCH = 'master'; // or 'master'
+const BRANCH = 'main'; // or 'master'
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN; // set in Netlify dashboard
 
 const API_BASE = 'https://api.github.com';
