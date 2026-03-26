@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (step3) initGalleryPage();
 });
 
-// PAGE 1: upload image with EXIF stripped via canvas
+// PAGE 1: upload image
 function initPastePage() {
   const fileInput = document.getElementById('file-input');
   const preview = document.getElementById('preview');
@@ -24,79 +24,6 @@ function initPastePage() {
     console.error('InitPastePage: elements not found');
     return;
   }
-
-  preview.style.display = 'none';
-
-  fileInput.addEventListener('change', () => {
-    const file = fileInput.files && fileInput.files[0];
-    if (!file) return;
-
-    if (!file.type || !file.type.startsWith('image/')) {
-      alert('Please choose an image file.');
-      fileInput.value = '';
-      return;
-    }
-
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      const img = new Image();
-      img.onload = () => {
-        // Create canvas and draw the image into it (strips EXIF)
-        const canvas = document.createElement('canvas');
-        const maxSize = 1600; // optional: limit largest side to 1600px
-        let width = img.width;
-        let height = img.height;
-
-        if (width > height && width > maxSize) {
-          height = Math.round((height * maxSize) / width);
-          width = maxSize;
-        } else if (height >= width && height > maxSize) {
-          width = Math.round((width * maxSize) / height);
-          height = maxSize;
-        }
-
-        canvas.width = width;
-        canvas.height = height;
-
-        const ctx = canvas.getContext('2d');
-        ctx.drawImage(img, 0, 0, width, height);
-
-        // Get clean data URL (no EXIF)
-        currentImageDataUrl = canvas.toDataURL('image/jpeg', 0.9);
-
-        preview.src = currentImageDataUrl;
-        preview.style.display = 'block';
-        redoBtn.disabled = false;
-        nextBtn.disabled = false;
-      };
-      img.onerror = () => {
-        alert('Could not load image.');
-      };
-      img.src = e.target.result; // original file data URL
-    };
-    reader.readAsDataURL(file);
-  });
-
-  redoBtn.addEventListener('click', () => {
-    currentImageDataUrl = null;
-    preview.src = '';
-    preview.style.display = 'none';
-    redoBtn.disabled = true;
-    nextBtn.disabled = true;
-    fileInput.value = '';
-    localStorage.removeItem(STORAGE_KEY_IMAGE);
-  });
-
-  nextBtn.addEventListener('click', () => {
-    if (!currentImageDataUrl) {
-      alert('Choose an image first.');
-      return;
-    }
-    localStorage.setItem(STORAGE_KEY_IMAGE, currentImageDataUrl);
-    window.location.href = 'comment.html';
-  });
-}
-
 
   preview.style.display = 'none';
 
@@ -204,27 +131,4 @@ async function initGalleryPage() {
     }
     const items = await res.json();
 
-    grid.innerHTML = '';
-
-    items.forEach((item) => {
-      const card = document.createElement('div');
-      card.className = 'gallery-card';
-
-      const img = document.createElement('img');
-      img.src = item.imageUrl;
-      img.alt = 'Anonymous submission';
-      card.appendChild(img);
-
-      if (item.comment) {
-        const p = document.createElement('p');
-        p.className = 'gallery-caption';
-        p.textContent = item.comment;
-        card.appendChild(p);
-      }
-
-      grid.appendChild(card);
-    });
-  } catch (err) {
-    console.error(err);
-  }
-}
+    grid.innerHTML
