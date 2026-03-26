@@ -1,10 +1,7 @@
-// PAGE 1: upload image instead of clipboard paste
-function initPastePage() {
-  const fileInput = document.getElementById('file-input');
-  const preview = document.getElementById('preview');
-  const redoBtn = document.getElementById('redo-btn');
-  const nextBtn = document.getElementById('next-btn');
-  document.addEventListener('DOMContentLoaded', () => {
+const STORAGE_KEY_IMAGE = 'anonGalleryImage';
+
+// Decide which page to initialize
+document.addEventListener('DOMContentLoaded', () => {
   const step1 = document.getElementById('step-1');
   const step2 = document.getElementById('step-2');
   const step3 = document.getElementById('step-3');
@@ -14,24 +11,25 @@ function initPastePage() {
   if (step3) initGalleryPage();
 });
 
+// PAGE 1: upload image instead of clipboard paste
+function initPastePage() {
+  const fileInput = document.getElementById('file-input');
+  const preview = document.getElementById('preview');
+  const redoBtn = document.getElementById('redo-btn');
+  const nextBtn = document.getElementById('next-btn');
 
   let currentImageDataUrl = null;
 
-  // Safety: if we didn't find the elements, stop
   if (!fileInput || !preview || !redoBtn || !nextBtn) {
     console.error('InitPastePage: elements not found');
     return;
   }
 
-  // Hide preview at start
   preview.style.display = 'none';
 
-  // When user selects a file
   fileInput.addEventListener('change', () => {
     const file = fileInput.files && fileInput.files[0];
-    if (!file) {
-      return;
-    }
+    if (!file) return;
 
     if (!file.type || !file.type.startsWith('image/')) {
       alert('Please choose an image file.');
@@ -50,7 +48,6 @@ function initPastePage() {
     reader.readAsDataURL(file);
   });
 
-  // Redo: clear image and reset
   redoBtn.addEventListener('click', () => {
     currentImageDataUrl = null;
     preview.src = '';
@@ -61,7 +58,6 @@ function initPastePage() {
     localStorage.removeItem(STORAGE_KEY_IMAGE);
   });
 
-  // Next: store image and go to caption page
   nextBtn.addEventListener('click', () => {
     if (!currentImageDataUrl) {
       alert('Choose an image first.');
@@ -70,4 +66,14 @@ function initPastePage() {
     localStorage.setItem(STORAGE_KEY_IMAGE, currentImageDataUrl);
     window.location.href = 'comment.html';
   });
+}
+
+// PAGE 2: caption page (placeholder so file loads without errors)
+function initCommentPage() {
+  // we can fill this later if needed
+}
+
+// PAGE 3: gallery page (placeholder so file loads without errors)
+function initGalleryPage() {
+  // we can fill this later if needed
 }
