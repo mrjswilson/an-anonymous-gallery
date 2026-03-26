@@ -1,4 +1,3 @@
-console.log('paste.js loaded');
 const STORAGE_KEY_IMAGE = 'anonGalleryImage';
 
 // Decide which page to initialize
@@ -10,6 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (step1) initPastePage();
   if (step2) initCommentPage();
   if (step3) initGalleryPage();
+  console.log('paste.js loaded');
 });
 
 // PAGE 1: upload image
@@ -77,7 +77,6 @@ function initCommentPage() {
 
   const imageDataUrl = localStorage.getItem(STORAGE_KEY_IMAGE);
   if (!imageDataUrl) {
-    // No image stored, send back to start
     window.location.href = 'index.html';
     return;
   }
@@ -132,4 +131,27 @@ async function initGalleryPage() {
     }
     const items = await res.json();
 
-    grid.innerHTML
+    grid.innerHTML = '';
+
+    items.forEach((item) => {
+      const card = document.createElement('div');
+      card.className = 'gallery-card';
+
+      const img = document.createElement('img');
+      img.src = item.imageUrl;
+      img.alt = 'Anonymous submission';
+      card.appendChild(img);
+
+      if (item.comment) {
+        const p = document.createElement('p');
+        p.className = 'gallery-caption';
+        p.textContent = item.comment;
+        card.appendChild(p);
+      }
+
+      grid.appendChild(card);
+    });
+  } catch (err) {
+    console.error(err);
+  }
+}
