@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (step3) initGalleryPage();
 });
 
-// PAGE 1: upload image instead of clipboard paste
+// PAGE 1: upload image
 function initPastePage() {
   const fileInput = document.getElementById('file-input');
   const preview = document.getElementById('preview');
@@ -68,12 +68,90 @@ function initPastePage() {
   });
 }
 
-// PAGE 2: caption page (placeholder so file loads without errors)
+// PAGE 2: caption page
 function initCommentPage() {
-  // we can fill this later if needed
+  const captionInput = document.getElementById('caption-input');
+  const skipBtn = document.getElementById('skip-caption-btn');
+  const submitBtn = document.getElementById('submit-btn');
+
+  const imageDataUrl = localStorage.getItem(STORAGE_KEY_IMAGE);
+  if (!imageDataUrl) {
+    // No image stored, send back to start
+    window.location.href = 'index.html';
+    return;
+  }
+
+  skipBtn.addEventListener('click', () => {
+    submitSubmission(imageDataUrl, '');
+  });
+
+  submitBtn.addEventListener('click', () => {
+    const caption = captionInput.value.trim();
+    submitSubmission(imageDataUrl, caption);
+  });
 }
 
-// PAGE 3: gallery page (placeholder so file loads without errors)
-function initGalleryPage() {
-  // we can fill this later if needed
+// Send data to Netlify function, then go to gallery
+async function submitSubmission(imageDataUrl, caption) {
+  try {
+    const res = await fetch('/.netlify/functions/submissions', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        imageUrl: imageDataUrl,
+        comment: caption || null,
+      }),
+    });
+
+    if (!res.ok) {
+      const text = await res.text();
+      console.error(text);
+      alert('Error posting image.');
+      return;
+    }
+
+    localStorage.removeItem(STORAGE_KEY_IMAGE);
+    window.location.href = 'gallery.html';
+  } catch (err) {
+    console.error(err);
+    alert('Network error posting image.');
+  }
+}
+
+// PAGE 3: gallery page
+async function initGalleryPage() {
+  const grid = document.getElementById('gallery-grid');
+  if (!grid) return;
+
+  try {
+    const res = await fetch('/.netlify/functions/submissions');
+    if (!res.ok) {
+      console.error('Failed to load gallery');
+      return;
+    }
+    const items = await res.json();
+
+    grid.innerHTML = '';
+
+    items.forEach((item) => {
+      const card = document.createElement('div');
+      card.className = 'gallery-card';
+
+      const img = document.createElement('img');
+      img.src = item.imageUrl;
+      img.alt = 'Anonymous submission';
+      card.appendChild(img);
+
+      if (item.comment) {
+        const p = document.createElement('p');
+        p.className = 'gallery-caption';
+        p.textContent = item.comment;
+        card.appendChild(p);
+      }
+
+      grid.appendChild(card);
+    });
+  } catch (err) {
+    console.error(err);
+  }
 }
