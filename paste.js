@@ -1,3 +1,4 @@
+console.log('paste.js loaded');
 const STORAGE_KEY_IMAGE = 'anonGalleryImage';
 
 // Decide which page to initialize
